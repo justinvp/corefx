@@ -176,9 +176,7 @@ namespace System.Data.Common
             // if the object doesn't contain a char[] then the user will get an exception
             string s = (string)_values[i];
 
-            char[] data = s.ToCharArray();
-
-            int cchars = data.Length;
+            int cchars = s.Length;
 
             // since arrays can't handle 64 bit values and this interface doesn't
             // allow chunked access to data, a dataIndex outside the rang of Int32
@@ -212,11 +210,11 @@ namespace System.Data.Common
                     }
                 }
 
-                Array.Copy(data, ndataIndex, buffer, bufferIndex, cchars);
+                s.CopyTo(ndataIndex, buffer, bufferIndex, cchars);
             }
             catch (Exception e) when (ADP.IsCatchableExceptionType(e))
             {
-                cchars = data.Length;
+                cchars = s.Length;
 
                 if (length < 0)
                 {
